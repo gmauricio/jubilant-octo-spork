@@ -22,7 +22,7 @@ class MemorySource implements Source
 
     public function get($id)
     {
-        $results = array_filter($this->vacancies, function($vacancy) {
+        $results = array_filter($this->vacancies, function($vacancy) use ($id) {
             return $vacancy->id === $id; 
         });
         if (count($results) > 0) {

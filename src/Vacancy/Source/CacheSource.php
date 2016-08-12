@@ -9,18 +9,26 @@ class CacheSource implements Source
 {    
     private $source;
 
-    public function __construct(CacheProvider $cacheProvider, $source)
+    private $cache;
+
+    public function __construct(CacheProvider $cache, $source)
     {
+        $this->cache = $cache;
         $this->source = $source;
+    }
+
+    public function getName()
+    {
+        return 'cache';
     }
 
     public function get($id)
     {
-        $vacancy = $cacheProvider->get($id);
+        $vacancy = $this->cache->get($id);
 
         if (!$vacancy) {
-            $vacancy = $source->get($id);
-            $cacheProvider->set($id, $vacancy);
+            $vacancy = $this->source->get($id);
+            $this->cache->set($id, $vacancy);
         }
         
         return $vacancy;
@@ -30,36 +38,19 @@ class CacheSource implements Source
     {
         $vacancies = $this->source->getAll();
         foreach($vacancies as $vacancy) {
-            $cacheProvider->set($vacancy->id, $vacancy);
+            $this->cache->set($vacancy->id, $vacancy);
         }
 
         return $vacancies;
     }
 
-    public function addSource(Source $source)
+    public function filter(array $filters)
     {
-        $this->sources[$source->getName()] = $source;
-        
-        return $this;
-    }
+        $vacancies = $this->source->filter($filters);
+        foreach($vacancies as $vacancy) {
+            $this->cache->set($vacancy->id, $vacancy);
+        }
 
-    public function removeSource($key) 
-    {
-        return new Repository(array_filter($this->sources, function($name, $source) {
-            return $name != $key;
-        }, ARRAY_FILTER_USE_BOTH));
-    }
-    
-    public function using($key)
-    {
-        $keys = is_array($key) ? $key : [$key];
-        return new Repository(array_map(function($key) {
-            if (!isset($this->sources[$key])) {
-                throw new \RuntimeException('Source with key ' . $key . ' is not registered');
-            }
-            return $this->sources[$key];
-        }, $keys));
-
-        return $this;
+        return $vacancies;
     }
 }
