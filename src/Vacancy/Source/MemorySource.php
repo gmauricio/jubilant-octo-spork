@@ -36,4 +36,9 @@ class MemorySource implements Source
     {
         return $this->vacancies;
     }
+
+    public function filter(array $filters)
+    {
+        return $this->vacancies;
+    }
 }
