@@ -1,4 +1,6 @@
-# jubilant-octo-spork
+# The Sourcerer
+
+The Sourcerer is a library to combine several sources for fetching resources in a centralized manner.
 
 ## Basic Usage
 
