@@ -5,7 +5,7 @@ namespace Vacancy\Source;
 use Vacancy\Cache\CacheProvider;
 use Vacancy\Source;
 
-class CacheSource implements Source
+class CacheableSource implements Source
 {    
     private $source;
 

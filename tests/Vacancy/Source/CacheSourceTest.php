@@ -6,10 +6,10 @@ use PHPUnit\Framework\TestCase;
 use Vacancy\Model\Vacancy;
 use Vacancy\Cache\CacheProvider;
 use Vacancy\Source;
-use Vacancy\Source\CacheSource;
+use Vacancy\Source\CacheableSource;
 use Vacancy\Source\MemorySource;
 
-class CacheSourceTest extends TestCase
+class CacheableSourceTest extends TestCase
 {    
     public function testThatSourceIsCalledIfVacancyNotCached()
     {
@@ -22,9 +22,9 @@ class CacheSourceTest extends TestCase
         $source = $this->createMock(CacheProvider::class);
         $source->expects($this->once())->method('get')->willReturn($vacancy);
 
-        $cacheSource = new CacheSource($cache, $source);
+        $cacheableSource = new CacheableSource($cache, $source);
 
-        $this->assertEquals($vacancy, $cacheSource->get(1));
+        $this->assertEquals($vacancy, $cacheableSource->get(1));
     }
 
     public function testThatSourceIsNotCalledIfVacancyIsCached()
@@ -38,8 +38,8 @@ class CacheSourceTest extends TestCase
         $source = $this->createMock(CacheProvider::class);
         $source->expects($this->never())->method('get');
 
-        $cacheSource = new CacheSource($cache, $source);
+        $cacheableSource = new CacheableSource($cache, $source);
 
-        $this->assertEquals($vacancy, $cacheSource->get(1));
+        $this->assertEquals($vacancy, $cacheableSource->get(1));
     }
 }
