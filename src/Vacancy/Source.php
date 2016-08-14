@@ -11,5 +11,5 @@ interface Source
 
     public function getAll();
 
-    public function filter(array $filters);
+    public function find(array $filters);
 }

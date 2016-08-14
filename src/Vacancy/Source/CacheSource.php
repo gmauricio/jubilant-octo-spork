@@ -44,9 +44,9 @@ class CacheSource implements Source
         return $vacancies;
     }
 
-    public function filter(array $filters)
+    public function find(array $filters)
     {
-        $vacancies = $this->source->filter($filters);
+        $vacancies = $this->source->find($filters);
         foreach($vacancies as $vacancy) {
             $this->cache->set($vacancy->id, $vacancy);
         }

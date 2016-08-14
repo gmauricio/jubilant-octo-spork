@@ -2,9 +2,7 @@
 
 namespace Vacancy;
 
-use Vacancy\Source;
-
-class Repository implements Source
+class Repository
 {    
     private $sources;
 
@@ -14,10 +12,6 @@ class Repository implements Source
             $result[$source->getName()] = $source;
             return $result;
         }, []);
-    }
-
-    public function getName() {
-        return 'repository';
     }
 
     public function get($id)
@@ -47,14 +41,14 @@ class Repository implements Source
         return $vacancies;
     }
 
-    public function filter(array $filters)
+    public function find(array $filters)
     {
         if (count($this->sources) === 0) {
             throw new \RuntimeException('No source registered.');
         }
         $vacancies = [];
         foreach($this->sources as $source) {
-            $vacancies = array_merge($vacancies, $source->filter($filters));
+            $vacancies = array_merge($vacancies, $source->find($filters));
         }
 
         return $vacancies;

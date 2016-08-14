@@ -33,44 +33,4 @@ class Vacancy
      * @var string
      */
     public $description;
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getTitle() {
-        return $this->title;
-    }
-
-    public function setTitle($id) {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getContent() {
-        return $this->id;
-    }
-
-    public function setContent($id) {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getDescription() {
-        return $this->id;
-    }
-
-    public function setDescription($id) {
-        $this->id = $id;
-
-        return $this;
-    }
 }
