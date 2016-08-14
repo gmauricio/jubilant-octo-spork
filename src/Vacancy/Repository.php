@@ -4,8 +4,14 @@ namespace Vacancy;
 
 class Repository
 {    
+    /**
+     * @var Vacancy\Source\SearchableSource[]
+     */
     private $sources;
 
+    /**
+     * @param Vacancy\Source\SearchableSource[] sources
+     */
     public function __construct(array $sources)
     {
         $this->sources = array_reduce($sources, function ($result, $source) {

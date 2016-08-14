@@ -4,6 +4,7 @@ namespace Vacancy\Source;
 
 use Vacancy\Cache\CacheProvider;
 use Vacancy\Source;
+use Vacancy\Source\SearchableSource;
 
 class CacheableSource implements Source
 {    
@@ -11,7 +12,7 @@ class CacheableSource implements Source
 
     private $cache;
 
-    public function __construct(CacheProvider $cache, $source)
+    public function __construct(CacheProvider $cache, SearchableSource $source)
     {
         $this->cache = $cache;
         $this->source = $source;

@@ -5,7 +5,7 @@ namespace Vacancy\Source;
 use Vacancy\Source;
 use Vacancy\Mapper;
 
-class LocalDbSource implements Source
+class LocalDbSource implements SearchableSource
 {
     private $name;
     

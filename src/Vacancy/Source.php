@@ -10,6 +10,4 @@ interface Source
     public function get($id);
 
     public function getAll();
-
-    public function find(array $filters);
 }
