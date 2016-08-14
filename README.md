@@ -4,7 +4,7 @@ The Sourcerer is a library to combine several sources for fetching resources in 
 
 ## Basic Usage
 
-A repository is a special kind of source that contain a list of sources to delegate fetching of resources
+A repository is a central point of access of persisted objects, coming from different sources
 
 ```php
 //Init a list of sources that implement Vacancy\Source
