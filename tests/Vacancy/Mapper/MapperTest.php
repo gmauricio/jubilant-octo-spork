@@ -18,6 +18,20 @@ class MapperTest extends TestCase
         $this->assertEquals($vacancy, $mapper->map($data));
     }
 
+    /**
+     * @dataProvider singleMapsProvider
+     */
+    public function testThatReverseMapMapReturnsSameObject($mapper, $vacancy, $data) {
+        $this->assertEquals($data, $mapper->reverseMap($mapper->map($data)));
+    }
+
+    /**
+     * @dataProvider singleMapsProvider
+     */
+    public function testThatMapReverseMapReturnsSameObject($mapper, $vacancy, $data) {
+        $this->assertEquals($vacancy, $mapper->map($mapper->reverseMap($vacancy)));
+    }
+
     public function singleMapsProvider()
     {
         return  [

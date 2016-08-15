@@ -11,4 +11,12 @@ class ApiMapper extends Mapper
     public function map($row) {
         return new Model($row);
     }
+
+    public function reverseMap($model) {
+        return $this->removeNulls([
+            'id' => $model['id'],
+            'title' => $model['title'],
+            'content' => $model['content']
+        ]);
+    }
 }

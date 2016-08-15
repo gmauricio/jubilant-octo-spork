@@ -16,4 +16,12 @@ class ModelToVacancyMapper extends Mapper
 
         return $vacancy;
     }
+
+    public function reverseMap($vacancy) {
+        return new Model($this->removeNulls([
+            'id' => $vacancy->id,
+            'title' => $vacancy->title,
+            'content' => $vacancy->content
+        ]));
+    }
 }
