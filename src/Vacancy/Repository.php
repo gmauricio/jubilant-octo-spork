@@ -4,6 +4,7 @@ namespace Vacancy;
 
 use Vacancy\Source;
 use Vacancy\Source\SearchableSource;
+use Vacancy\Mapper;
 
 class Repository
 {    
@@ -12,15 +13,18 @@ class Repository
      */
     private $sources;
 
+    private $mapper;
+
     /**
      * @param Vacancy\Source\Source[] sources
      */
-    public function __construct(array $sources)
+    public function __construct(array $sources, Mapper $mapper)
     {
         $this->sources = array_reduce($sources, function ($result, $source) {
             $result[$source->getName()] = $source;
             return $result;
         }, []);
+        $this->mapper = $mapper;
     }
 
     public function get($id)
@@ -30,7 +34,7 @@ class Repository
         }
         foreach($this->sources as $source) {
             if ($vacancy = $source->get($id)) {
-                return $vacancy;
+                return $this->mapper->map($vacancy);
             }
         }
 
@@ -47,7 +51,7 @@ class Repository
             $vacancies = array_merge($vacancies, $source->getAll());
         }
 
-        return $vacancies;
+        return $this->mapper->mapCollection($vacancies);
     }
 
     public function find(array $filters)
@@ -62,7 +66,7 @@ class Repository
             }
         }
 
-        return $vacancies;
+        return $this->mapper->mapCollection($vacancies);
     }
 
     public function addSource(Source $source)
@@ -87,7 +91,7 @@ class Repository
                 throw new \RuntimeException('Source with key ' . $key . ' is not registered');
             }
             return $this->sources[$key];
-        }, $keys));
+        }, $keys), $this->mapper);
 
         return $this;
     }
