@@ -4,6 +4,7 @@ namespace Vacancy;
 
 use Vacancy\Source;
 use Vacancy\Source\SearchableSource;
+use Vacancy\Source\WriteableSource;
 use Vacancy\Mapper;
 
 class Repository
@@ -67,6 +68,19 @@ class Repository
         }
 
         return $this->mapper->mapCollection($vacancies);
+    }
+
+    public function update($vacancy)
+    {
+        if (count($this->sources) === 0) {
+            throw new \RuntimeException('No source registered.');
+        }
+        $vacancies = [];
+        foreach($this->sources as $source) {
+            if ($source instanceof WriteableSource) {
+                $source->update($this->mapper->reverseMap($vacancy));
+            }
+        }
     }
 
     public function addSource(Source $source)
