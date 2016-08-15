@@ -4,15 +4,11 @@ namespace Vacancy\Mapper;
 
 use Vacancy\Model\Vacancy;
 use Vacancy\Mapper;
+use Vacancy\Source\Model;
 
 class LocalDbMapper extends Mapper
 {
     public function map($row) {
-        $vacancy = new Vacancy();
-        $vacancy->id = $row['id'];
-        $vacancy->title = $row['title'];
-        $vacancy->content = isset($row['content']) ? $row['content'] : null;
-
-        return $vacancy;
+        return new Model($row);
     }
 }
