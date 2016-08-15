@@ -2,15 +2,18 @@
 
 namespace Vacancy;
 
+use Vacancy\Source;
+use Vacancy\Source\SearchableSource;
+
 class Repository
 {    
     /**
-     * @var Vacancy\Source\SearchableSource[]
+     * @var Vacancy\Source\Source[]
      */
     private $sources;
 
     /**
-     * @param Vacancy\Source\SearchableSource[] sources
+     * @param Vacancy\Source\Source[] sources
      */
     public function __construct(array $sources)
     {
@@ -54,7 +57,9 @@ class Repository
         }
         $vacancies = [];
         foreach($this->sources as $source) {
-            $vacancies = array_merge($vacancies, $source->find($filters));
+            if ($source instanceof SearchableSource) {
+                $vacancies = array_merge($vacancies, $source->find($filters));
+            }
         }
 
         return $vacancies;
